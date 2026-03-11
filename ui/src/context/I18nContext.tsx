@@ -175,6 +175,9 @@ const messages: Record<Locale, Record<string, string>> = {
     "agents.tab.paused": "Paused",
     "agents.tab.error": "Error",
     "agents.filters": "Filters",
+    "agents.newAgent": "New Agent",
+    "agents.emptyCreate": "Create your first agent to get started.",
+    "agents.emptyNoOrg": "No organizational hierarchy defined.",
     "agentDetail.noRuns": "No runs yet.",
 
     "issuesList.empty": "No issues match the current filters or search.",
@@ -362,6 +365,9 @@ const messages: Record<Locale, Record<string, string>> = {
     "agents.tab.paused": "일시중지",
     "agents.tab.error": "오류",
     "agents.filters": "필터",
+    "agents.newAgent": "새 에이전트",
+    "agents.emptyCreate": "시작하려면 첫 에이전트를 생성하세요.",
+    "agents.emptyNoOrg": "정의된 조직 계층이 없습니다.",
     "agentDetail.noRuns": "아직 실행 기록이 없습니다.",
 
     "issuesList.empty": "현재 필터/검색 조건에 맞는 이슈가 없습니다.",

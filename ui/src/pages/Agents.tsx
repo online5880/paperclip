@@ -200,7 +200,7 @@ export function Agents() {
           )}
           <Button size="sm" variant="outline" onClick={openNewAgent}>
             <Plus className="h-3.5 w-3.5 mr-1.5" />
-            New Agent
+            {t("agents.newAgent")}
           </Button>
         </div>
       </div>
@@ -214,8 +214,8 @@ export function Agents() {
       {agents && agents.length === 0 && (
         <EmptyState
           icon={Bot}
-          message="Create your first agent to get started."
-          action="New Agent"
+          message={t("agents.emptyCreate")}
+          action={t("agents.newAgent")}
           onAction={openNewAgent}
         />
       )}
@@ -299,7 +299,7 @@ export function Agents() {
 
       {effectiveView === "org" && orgTree && orgTree.length === 0 && (
         <p className="text-sm text-muted-foreground text-center py-8">
-          No organizational hierarchy defined.
+          {t("agents.emptyNoOrg")}
         </p>
       )}
     </div>
