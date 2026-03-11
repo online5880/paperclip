@@ -19,7 +19,7 @@ import { usePanel } from "../context/PanelContext";
 import { useCompany } from "../context/CompanyContext";
 import { useSidebar } from "../context/SidebarContext";
 import { useTheme } from "../context/ThemeContext";
-import { useI18n } from "../context/I18nContext";
+import { useI18n, type Locale } from "../context/I18nContext";
 import { useKeyboardShortcuts } from "../hooks/useKeyboardShortcuts";
 import { useCompanyPageMemory } from "../hooks/useCompanyPageMemory";
 import { healthApi } from "../api/health";
@@ -27,6 +27,7 @@ import { queryKeys } from "../lib/queryKeys";
 import { cn } from "../lib/utils";
 import { NotFoundPage } from "../pages/NotFound";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 export function Layout() {
   const { sidebarOpen, setSidebarOpen, toggleSidebar, isMobile } = useSidebar();
@@ -40,7 +41,7 @@ export function Layout() {
     setSelectedCompanyId,
   } = useCompany();
   const { theme, toggleTheme } = useTheme();
-  const { toggleLocale, t } = useI18n();
+  const { locale, setLocale, t } = useI18n();
   const { companyPrefix } = useParams<{ companyPrefix: string }>();
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,6 +53,7 @@ export function Layout() {
     () => t("layout.switchTheme", { theme: t(`theme.${nextTheme}`) }),
     [nextTheme, t],
   );
+  const languageOptions: Locale[] = ["en", "ko", "ja"];
   const matchedCompany = useMemo(() => {
     if (!companyPrefix) return null;
     const requestedPrefix = companyPrefix.toUpperCase();
@@ -241,17 +243,34 @@ export function Layout() {
                 icon={BookOpen}
                 className="flex-1 min-w-0"
               />
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon-sm"
-                className="text-muted-foreground shrink-0"
-                onClick={toggleLocale}
-                aria-label={t("layout.switchLanguage")}
-                title={t("layout.switchLanguage")}
-              >
-                <Languages className="h-4 w-4" />
-              </Button>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-sm"
+                    className="text-muted-foreground shrink-0"
+                    aria-label={t("layout.switchLanguage")}
+                    title={t("layout.switchLanguage")}
+                  >
+                    <Languages className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-36 p-1" align="start">
+                  {languageOptions.map((lang) => (
+                    <button
+                      key={lang}
+                      className={cn(
+                        "flex w-full items-center rounded px-2 py-1.5 text-xs hover:bg-accent/50",
+                        locale === lang && "bg-accent"
+                      )}
+                      onClick={() => setLocale(lang)}
+                    >
+                      {t(`layout.language.${lang}`)}
+                    </button>
+                  ))}
+                </PopoverContent>
+              </Popover>
               <Button
                 type="button"
                 variant="ghost"
@@ -287,17 +306,34 @@ export function Layout() {
                 icon={BookOpen}
                 className="flex-1 min-w-0"
               />
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon-sm"
-                className="text-muted-foreground shrink-0"
-                onClick={toggleLocale}
-                aria-label={t("layout.switchLanguage")}
-                title={t("layout.switchLanguage")}
-              >
-                <Languages className="h-4 w-4" />
-              </Button>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-sm"
+                    className="text-muted-foreground shrink-0"
+                    aria-label={t("layout.switchLanguage")}
+                    title={t("layout.switchLanguage")}
+                  >
+                    <Languages className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-36 p-1" align="start">
+                  {languageOptions.map((lang) => (
+                    <button
+                      key={lang}
+                      className={cn(
+                        "flex w-full items-center rounded px-2 py-1.5 text-xs hover:bg-accent/50",
+                        locale === lang && "bg-accent"
+                      )}
+                      onClick={() => setLocale(lang)}
+                    >
+                      {t(`layout.language.${lang}`)}
+                    </button>
+                  ))}
+                </PopoverContent>
+              </Popover>
               <Button
                 type="button"
                 variant="ghost"

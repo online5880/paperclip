@@ -25,6 +25,9 @@ const messages: Record<Locale, Record<string, string>> = {
     "layout.documentation": "Documentation",
     "layout.switchTheme": "Switch to {theme} mode",
     "layout.switchLanguage": "Switch language",
+    "layout.language.en": "English",
+    "layout.language.ko": "한국어",
+    "layout.language.ja": "日本語",
     "theme.light": "light",
     "theme.dark": "dark",
 
@@ -243,6 +246,9 @@ const messages: Record<Locale, Record<string, string>> = {
     "layout.documentation": "문서",
     "layout.switchTheme": "{theme} 모드로 전환",
     "layout.switchLanguage": "언어 전환",
+    "layout.language.en": "English",
+    "layout.language.ko": "한국어",
+    "layout.language.ja": "日本語",
     "theme.light": "라이트",
     "theme.dark": "다크",
 
@@ -461,6 +467,9 @@ const messages: Record<Locale, Record<string, string>> = {
     "layout.documentation": "ドキュメント",
     "layout.switchTheme": "{theme}モードに切り替え",
     "layout.switchLanguage": "言語を切り替え",
+    "layout.language.en": "English",
+    "layout.language.ko": "한국어",
+    "layout.language.ja": "日本語",
     "theme.light": "ライト",
     "theme.dark": "ダーク",
 
