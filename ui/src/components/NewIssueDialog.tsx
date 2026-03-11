@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo, type ChangeEvent } f
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDialog } from "../context/DialogContext";
 import { useCompany } from "../context/CompanyContext";
+import { useI18n } from "../context/I18nContext";
 import { issuesApi } from "../api/issues";
 import { projectsApi } from "../api/projects";
 import { agentsApi } from "../api/agents";
@@ -151,7 +152,7 @@ function clearDraft() {
 
 const statuses = [
   { value: "backlog", label: "Backlog", color: issueStatusText.backlog ?? issueStatusTextDefault },
-  { value: "todo", label: "Todo", color: issueStatusText.todo ?? issueStatusTextDefault },
+  { value: "todo", label: "todo", color: issueStatusText.todo ?? issueStatusTextDefault },
   { value: "in_progress", label: "In Progress", color: issueStatusText.in_progress ?? issueStatusTextDefault },
   { value: "in_review", label: "In Review", color: issueStatusText.in_review ?? issueStatusTextDefault },
   { value: "done", label: "Done", color: issueStatusText.done ?? issueStatusTextDefault },
@@ -165,6 +166,7 @@ const priorities = [
 ];
 
 export function NewIssueDialog() {
+  const { t } = useI18n();
   const { newIssueOpen, newIssueDefaults, closeNewIssue } = useDialog();
   const { companies, selectedCompanyId, selectedCompany } = useCompany();
   const queryClient = useQueryClient();
@@ -646,7 +648,7 @@ export function NewIssueDialog() {
               </PopoverContent>
             </Popover>
             <span className="text-muted-foreground/60">&rsaquo;</span>
-            <span>New issue</span>
+            <span>{t("issueDialog.newIssue")}</span>
           </div>
           <div className="flex items-center gap-1">
             <Button
@@ -672,7 +674,7 @@ export function NewIssueDialog() {
         <div className="px-4 pt-4 pb-2 shrink-0">
           <textarea
             className="w-full text-lg font-semibold bg-transparent outline-none resize-none overflow-hidden placeholder:text-muted-foreground/50"
-            placeholder="Issue title"
+            placeholder={t("issueDialog.issueTitle")}
             rows={1}
             value={title}
             onChange={(e) => {
@@ -697,16 +699,16 @@ export function NewIssueDialog() {
         <div className="px-4 pb-2 shrink-0">
           <div className="overflow-x-auto overscroll-x-contain">
             <div className="inline-flex items-center gap-2 text-sm text-muted-foreground flex-wrap sm:flex-nowrap sm:min-w-max">
-              <span>For</span>
+              <span>{t("issueDialog.for")}</span>
               <InlineEntitySelector
                 ref={assigneeSelectorRef}
                 value={assigneeId}
                 options={assigneeOptions}
-                placeholder="Assignee"
+                placeholder={t("issueDialog.assignee")}
                 disablePortal
-                noneLabel="No assignee"
-                searchPlaceholder="Search assignees..."
-                emptyMessage="No assignees found."
+                noneLabel={t("issueDialog.noAssignee")}
+                searchPlaceholder={t("issueDialog.searchAssignees")}
+                emptyMessage={t("issueDialog.noAssigneesFound")}
                 onChange={(id) => { if (id) trackRecentAssignee(id); setAssigneeId(id); }}
                 onConfirm={() => {
                   projectSelectorRef.current?.focus();
@@ -718,7 +720,7 @@ export function NewIssueDialog() {
                       <span className="truncate">{option.label}</span>
                     </>
                   ) : (
-                    <span className="text-muted-foreground">Assignee</span>
+                    <span className="text-muted-foreground">{t("issueDialog.assignee")}</span>
                   )
                 }
                 renderOption={(option) => {
@@ -732,16 +734,16 @@ export function NewIssueDialog() {
                   );
                 }}
               />
-              <span>in</span>
+              <span>{t("issueDialog.in")}</span>
               <InlineEntitySelector
                 ref={projectSelectorRef}
                 value={projectId}
                 options={projectOptions}
-                placeholder="Project"
+                placeholder={t("issueDialog.project")}
                 disablePortal
-                noneLabel="No project"
-                searchPlaceholder="Search projects..."
-                emptyMessage="No projects found."
+                noneLabel={t("issueDialog.noProject")}
+                searchPlaceholder={t("issueDialog.searchProjects")}
+                emptyMessage={t("issueDialog.noProjectsFound")}
                 onChange={handleProjectChange}
                 onConfirm={() => {
                   descriptionEditorRef.current?.focus();
@@ -756,7 +758,7 @@ export function NewIssueDialog() {
                       <span className="truncate">{option.label}</span>
                     </>
                   ) : (
-                    <span className="text-muted-foreground">Project</span>
+                    <span className="text-muted-foreground">{t("issueDialog.project")}</span>
                   )
                 }
                 renderOption={(option) => {
@@ -876,7 +878,7 @@ export function NewIssueDialog() {
             ref={descriptionEditorRef}
             value={description}
             onChange={setDescription}
-            placeholder="Add description..."
+            placeholder={t("issueDialog.addDescription")}
             bordered={false}
             mentions={mentionOptions}
             contentClassName={cn("text-sm text-muted-foreground pb-12", expanded ? "min-h-[220px]" : "min-h-[120px]")}
@@ -894,7 +896,7 @@ export function NewIssueDialog() {
             <PopoverTrigger asChild>
               <button className="inline-flex items-center gap-1.5 rounded-md border border-border px-2 py-1 text-xs hover:bg-accent/50 transition-colors">
                 <CircleDot className={cn("h-3 w-3", currentStatus.color)} />
-                {currentStatus.label}
+                {currentStatus.value === "todo" ? t("issueDialog.todo") : currentStatus.label}
               </button>
             </PopoverTrigger>
             <PopoverContent className="w-36 p-1" align="start">
@@ -908,7 +910,7 @@ export function NewIssueDialog() {
                   onClick={() => { setStatus(s.value); setStatusOpen(false); }}
                 >
                   <CircleDot className={cn("h-3 w-3", s.color)} />
-                  {s.label}
+                  {s.value === "todo" ? t("issueDialog.todo") : s.label}
                 </button>
               ))}
             </PopoverContent>
@@ -926,7 +928,7 @@ export function NewIssueDialog() {
                 ) : (
                   <>
                     <Minus className="h-3 w-3 text-muted-foreground" />
-                    Priority
+                    {t("issueDialog.priority")}
                   </>
                 )}
               </button>
@@ -951,7 +953,7 @@ export function NewIssueDialog() {
           {/* Labels chip (placeholder) */}
           <button className="inline-flex items-center gap-1.5 rounded-md border border-border px-2 py-1 text-xs hover:bg-accent/50 transition-colors text-muted-foreground">
             <Tag className="h-3 w-3" />
-            Labels
+            {t("issueDialog.labels")}
           </button>
 
           {/* Attach image chip */}
@@ -968,7 +970,7 @@ export function NewIssueDialog() {
             disabled={uploadDescriptionImage.isPending}
           >
             <Paperclip className="h-3 w-3" />
-            {uploadDescriptionImage.isPending ? "Uploading..." : "Image"}
+            {uploadDescriptionImage.isPending ? t("issueDialog.uploading") : t("issueDialog.image")}
           </button>
 
           {/* More (dates) */}
@@ -1000,14 +1002,14 @@ export function NewIssueDialog() {
             onClick={discardDraft}
             disabled={!hasDraft && !loadDraft()}
           >
-            Discard Draft
+            {t("issueDialog.discardDraft")}
           </Button>
           <Button
             size="sm"
             disabled={!title.trim() || createIssue.isPending}
             onClick={handleSubmit}
           >
-            {createIssue.isPending ? "Creating..." : "Create Issue"}
+            {createIssue.isPending ? t("issueDialog.creating") : t("issueDialog.createIssue")}
           </Button>
         </div>
       </DialogContent>
