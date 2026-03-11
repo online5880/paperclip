@@ -11,6 +11,7 @@ import {
 import { sidebarBadgesApi } from "../api/sidebarBadges";
 import { useCompany } from "../context/CompanyContext";
 import { useDialog } from "../context/DialogContext";
+import { useI18n } from "../context/I18nContext";
 import { queryKeys } from "../lib/queryKeys";
 import { cn } from "../lib/utils";
 
@@ -39,6 +40,7 @@ export function MobileBottomNav({ visible }: MobileBottomNavProps) {
   const location = useLocation();
   const { selectedCompanyId } = useCompany();
   const { openNewIssue } = useDialog();
+  const { t } = useI18n();
 
   const { data: sidebarBadges } = useQuery({
     queryKey: queryKeys.sidebarBadges(selectedCompanyId!),
@@ -48,19 +50,19 @@ export function MobileBottomNav({ visible }: MobileBottomNavProps) {
 
   const items = useMemo<MobileNavItem[]>(
     () => [
-      { type: "link", to: "/dashboard", label: "Home", icon: House },
-      { type: "link", to: "/issues", label: "Issues", icon: CircleDot },
-      { type: "action", label: "Create", icon: SquarePen, onClick: () => openNewIssue() },
-      { type: "link", to: "/agents/all", label: "Agents", icon: Users },
+      { type: "link", to: "/dashboard", label: t("mobileNav.home"), icon: House },
+      { type: "link", to: "/issues", label: t("mobileNav.issues"), icon: CircleDot },
+      { type: "action", label: t("mobileNav.create"), icon: SquarePen, onClick: () => openNewIssue() },
+      { type: "link", to: "/agents/all", label: t("mobileNav.agents"), icon: Users },
       {
         type: "link",
         to: "/inbox",
-        label: "Inbox",
+        label: t("mobileNav.inbox"),
         icon: Inbox,
         badge: sidebarBadges?.inbox,
       },
     ],
-    [openNewIssue, sidebarBadges?.inbox],
+    [openNewIssue, sidebarBadges?.inbox, t],
   );
 
   return (

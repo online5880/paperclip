@@ -6,6 +6,7 @@ import { heartbeatsApi } from "../api/heartbeats";
 import { useCompany } from "../context/CompanyContext";
 import { useDialog } from "../context/DialogContext";
 import { useBreadcrumbs } from "../context/BreadcrumbContext";
+import { useI18n } from "../context/I18nContext";
 import { useSidebar } from "../context/SidebarContext";
 import { queryKeys } from "../lib/queryKeys";
 import { StatusBadge } from "../components/StatusBadge";
@@ -61,6 +62,7 @@ export function Agents() {
   const { selectedCompanyId } = useCompany();
   const { openNewAgent } = useDialog();
   const { setBreadcrumbs } = useBreadcrumbs();
+  const { t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
   const { isMobile } = useSidebar();
@@ -113,11 +115,11 @@ export function Agents() {
   }, [agents]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Agents" }]);
-  }, [setBreadcrumbs]);
+    setBreadcrumbs([{ label: t("agents.breadcrumb") }]);
+  }, [setBreadcrumbs, t]);
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={Bot} message="Select a company to view agents." />;
+    return <EmptyState icon={Bot} message={t("agents.selectCompany")} />;
   }
 
   if (isLoading) {
@@ -133,10 +135,10 @@ export function Agents() {
         <Tabs value={tab} onValueChange={(v) => navigate(`/agents/${v}`)}>
           <PageTabBar
             items={[
-              { value: "all", label: "All" },
-              { value: "active", label: "Active" },
-              { value: "paused", label: "Paused" },
-              { value: "error", label: "Error" },
+              { value: "all", label: t("agents.tab.all") },
+              { value: "active", label: t("agents.tab.active") },
+              { value: "paused", label: t("agents.tab.paused") },
+              { value: "error", label: t("agents.tab.error") },
             ]}
             value={tab}
             onValueChange={(v) => navigate(`/agents/${v}`)}
@@ -153,7 +155,7 @@ export function Agents() {
               onClick={() => setFiltersOpen(!filtersOpen)}
             >
               <SlidersHorizontal className="h-3 w-3" />
-              Filters
+              {t("agents.filters")}
               {showTerminated && <span className="ml-0.5 px-1 bg-foreground/10 rounded text-[10px]">1</span>}
             </button>
             {filtersOpen && (

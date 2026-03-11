@@ -168,6 +168,24 @@ const messages: Record<Locale, Record<string, string>> = {
     "activity.filterPlaceholder": "Filter by type",
     "activity.allTypes": "All types",
 
+    "agents.breadcrumb": "Agents",
+    "agents.selectCompany": "Select a company to view agents.",
+    "agents.tab.all": "All",
+    "agents.tab.active": "Active",
+    "agents.tab.paused": "Paused",
+    "agents.tab.error": "Error",
+    "agents.filters": "Filters",
+    "agentDetail.noRuns": "No runs yet.",
+
+    "issuesList.empty": "No issues match the current filters or search.",
+    "issuesList.create": "Create Issue",
+
+    "mobileNav.home": "Home",
+    "mobileNav.issues": "Issues",
+    "mobileNav.create": "Create",
+    "mobileNav.agents": "Agents",
+    "mobileNav.inbox": "Inbox",
+
     "costs.breadcrumb": "Costs",
     "costs.selectCompany": "Select a company to view costs.",
     "costs.preset.mtd": "Month to Date",
@@ -336,6 +354,24 @@ const messages: Record<Locale, Record<string, string>> = {
     "activity.empty": "아직 활동이 없습니다.",
     "activity.filterPlaceholder": "유형으로 필터",
     "activity.allTypes": "모든 유형",
+
+    "agents.breadcrumb": "에이전트",
+    "agents.selectCompany": "에이전트를 보려면 회사를 선택하세요.",
+    "agents.tab.all": "전체",
+    "agents.tab.active": "활성",
+    "agents.tab.paused": "일시중지",
+    "agents.tab.error": "오류",
+    "agents.filters": "필터",
+    "agentDetail.noRuns": "아직 실행 기록이 없습니다.",
+
+    "issuesList.empty": "현재 필터/검색 조건에 맞는 이슈가 없습니다.",
+    "issuesList.create": "이슈 생성",
+
+    "mobileNav.home": "홈",
+    "mobileNav.issues": "이슈",
+    "mobileNav.create": "생성",
+    "mobileNav.agents": "에이전트",
+    "mobileNav.inbox": "받은함",
 
     "costs.breadcrumb": "비용",
     "costs.selectCompany": "비용을 보려면 회사를 선택하세요.",

@@ -3,6 +3,7 @@ import { Link } from "@/lib/router";
 import { useQuery } from "@tanstack/react-query";
 import { useDialog } from "../context/DialogContext";
 import { useCompany } from "../context/CompanyContext";
+import { useI18n } from "../context/I18nContext";
 import { issuesApi } from "../api/issues";
 import { queryKeys } from "../lib/queryKeys";
 import { groupBy } from "../lib/groupBy";
@@ -163,6 +164,7 @@ export function IssuesList({
 }: IssuesListProps) {
   const { selectedCompanyId } = useCompany();
   const { openNewIssue } = useDialog();
+  const { t } = useI18n();
 
   // Scope the storage key per company so folding/view state is independent across companies.
   const scopedKey = selectedCompanyId ? `${viewStateKey}:${selectedCompanyId}` : viewStateKey;
@@ -542,8 +544,8 @@ export function IssuesList({
       {!isLoading && filtered.length === 0 && viewState.viewMode === "list" && (
         <EmptyState
           icon={CircleDot}
-          message="No issues match the current filters or search."
-          action="Create Issue"
+          message={t("issuesList.empty")}
+          action={t("issuesList.create")}
           onAction={() => openNewIssue(newIssueDefaults())}
         />
       )}
